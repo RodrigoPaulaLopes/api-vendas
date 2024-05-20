@@ -1,7 +1,10 @@
+import 'reflect-metadata'
 import express, { NextFunction, Response, Request } from "express"
 import cors from 'cors'
 import router from "./routes/index"
 import AppError from "../errors/error"
+import "../typeorm"
+
 const app = express()
 
 app.use(cors())

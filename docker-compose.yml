@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  seller-db:
+    image: postgres:latest
+    container_name: seller-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: seller-db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5436:5432"
+volumes:
+  db-data:
