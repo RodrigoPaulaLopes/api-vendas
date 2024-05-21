@@ -25,7 +25,7 @@ class UpdateProductService{
         this.repository = getCustomRepository(ProductRepository)
     }
 
-    async execute({id, name, price, quantity}: IRequest) : Promise<IResponse>{
+    async execute({id, name, price, quantity}: IRequest){
 
  
         let product = await this.repository.findOne(id)

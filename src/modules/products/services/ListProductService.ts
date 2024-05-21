@@ -14,17 +14,17 @@ interface IResponse {
 interface IRequest {
     id: string
 }
-class ListProductService{
+class ListProductService {
     private readonly repository
 
-    constructor(){
+    constructor() {
         this.repository = getCustomRepository(ProductRepository)
     }
-    async execute({id}: IRequest) : Promise<IResponse>{
+    async execute({ id }: IRequest){
 
         const product = await this.repository.findOne(id)
 
-        if(!product) throw new AppError('product not found', 404)
+        if (!product) throw new AppError('product not found', 404)
 
         return product
     }

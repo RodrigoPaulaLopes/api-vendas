@@ -14,22 +14,23 @@ interface IResponse {
 interface IRequest {
     id: string
 }
-class ListProductService{
+class DeleteProductService{
 
     private readonly repository
 
     constructor(){
         this.repository = getCustomRepository(ProductRepository)
     }
-    async execute({id}: IRequest) : Promise<void>{
+    async execute({id}: IRequest){
     
         const product = await this.repository.findOne(id)
 
         if(!product) throw new AppError('product not found', 404)
 
-        await this.repository.delete(id)
+        const response = await this.repository.delete(id)
+        return response
 
     }
 }
 
-export default ListProductService
+export default DeleteProductService

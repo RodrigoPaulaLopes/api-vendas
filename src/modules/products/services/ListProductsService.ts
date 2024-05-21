@@ -16,7 +16,7 @@ class ListProductsService{
     constructor(){
         this.repository = getCustomRepository(ProductRepository)
     }
-    async execute() : Promise<IResponse[]>{
+    async execute(){
         return await this.repository.find()
     }
 }
