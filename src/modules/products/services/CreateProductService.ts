@@ -10,16 +10,19 @@ interface IRequest {
 
 class CreateProductService{
 
+    private readonly repository
 
+    constructor(){
+        this.repository = getCustomRepository(ProductRepository)
+    }
     async execute({name, price, quantity}: IRequest){
-        const repository = getCustomRepository(ProductRepository)
 
-        if (await repository.findByName(name)) throw new AppError("Product already exists!", 400)
+        if (await this.repository.findByName(name)) throw new AppError("Product already exists!", 400)
 
-        const product = await repository.create({name, price, quantity})
+        const product = await this.repository.create({name, price, quantity})
 
 
-        return await repository.save(product)
+        return await this.repository.save(product)
     }
 }
 
