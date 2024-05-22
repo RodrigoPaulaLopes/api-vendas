@@ -1,5 +1,5 @@
 import { getCustomRepository } from "typeorm"
-import ProductRepository from "../typeorm/repositories/products_repository"
+import ProductRepository from "../typeorm/repositories/products.repository"
 
 interface IResponse {
     id: string
