@@ -15,7 +15,7 @@ app.use(express.json())
 app.use('/api/v1', router)
 app.use(errors())
 
-app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
+app.use((error: Error | AppError, request: Request, response: Response, next: NextFunction) => {
     if (error instanceof AppError){
         return response.status(error.statusCode).json({
             status: 'error',
