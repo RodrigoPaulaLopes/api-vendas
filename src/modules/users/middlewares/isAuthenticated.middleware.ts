@@ -21,18 +21,20 @@ class IsAuthenticated {
         if (prefix !== 'Bearer') throw new AppError('Invalid prefix token', 401)
 
         // verify token
-        try{
+        try {
 
             const payload = jwt.verify(token, SECRET)
             const id = payload.sub as string
-            
+
             // find user by id
-            const user = await findUserById.execute({id})
-            
-            req.user = user
-            
+            const user = await findUserById.execute({ id })
+
+            req.user = {
+                id: user.id
+            }
+
             return next()
-        }catch{
+        } catch {
             throw new AppError('Invalid token!', 401)
         }
     }
