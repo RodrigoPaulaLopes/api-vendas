@@ -32,7 +32,6 @@ class ProductController implements GenericController {
     async show(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
         const { id } = req.params
         const listOneService = new ListProductService()
-
         const product = await listOneService.execute({ id })
 
         return res.status(200).json(product)
