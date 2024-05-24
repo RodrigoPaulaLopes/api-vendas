@@ -1,6 +1,6 @@
 import {Router, Request, Response} from 'express'
 
-import ProductController from 'modules/products/controller/ProductController'
+import ProductController from 'modules/products/controller/product.controller'
 import {celebrate, Joi, Segments } from 'celebrate'
 import UserController from 'modules/users/controller/user.controller'
 const userController = new UserController()

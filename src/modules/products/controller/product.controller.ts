@@ -2,7 +2,7 @@ import { type Request, type Response } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 import Product from "../typeorm/entities/product";
-import GenericController from "./GenericController";
+import GenericController from "./generic.controller";
 import ListProductsService from "../services/ListProductsService";
 import ListProductService from "../services/ListProductService";
 import CreateProductService from "../services/CreateProductService";
