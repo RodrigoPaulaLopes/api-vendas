@@ -1,13 +1,16 @@
 import {Router, Request, Response} from 'express'
-
-import ProductController from 'modules/products/controller/product.controller'
+import multer from 'multer'
+import uploadConfig from '../../../config/upload'
 import {celebrate, Joi, Segments } from 'celebrate'
 import UserController from 'modules/users/controller/user.controller'
+import UserAvatarController from 'modules/users/controller/user.avatar.controller'
+import IsAuthenticated from 'modules/users/middlewares/isAuthenticated.middleware'
 const userController = new UserController()
 
 const router = Router()
-
-
+const upload = multer(uploadConfig)
+const isAuthenticated = new IsAuthenticated()
+const userAvatarController = new UserAvatarController()
 router.post('/create', celebrate({
     [Segments.BODY]: {
         name: Joi.string().required(),
@@ -26,6 +29,9 @@ router.put('/update/:id', celebrate({
         id: Joi.string().uuid().required()
     }
 }), userController.update)
+
+
+router.patch('/avatar', isAuthenticated.execute, upload.single('avatar'), userAvatarController.update)
 
 router.get('/show/:id', celebrate({
     [Segments.PARAMS]: {

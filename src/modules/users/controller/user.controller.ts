@@ -52,6 +52,8 @@ class UserController implements GenericController {
         return res.status(204).json(await deleteUserService.execute({id}))
     }
 
+    
+
 }
 
 export default UserController

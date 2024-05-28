@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import ShowUserService from "../services/showUserService";
 import AppError from "shared/errors/error";
-import jwt, { JsonWebTokenError, VerifyErrors } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -32,7 +32,7 @@ class IsAuthenticated {
             req.user = {
                 id: user.id
             }
-
+          
             return next()
         } catch {
             throw new AppError('Invalid token!', 401)
