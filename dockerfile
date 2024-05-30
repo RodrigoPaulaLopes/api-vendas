@@ -16,6 +16,5 @@ COPY . .
 # Exponha a porta que a aplicação usará
 EXPOSE 3002
 
-
 # Comando para iniciar a aplicação usando ts-node-dev para recarregamento automático
 CMD ["yarn", "dev"]

@@ -8,7 +8,7 @@ const router = Router()
 const isAuthenticated = new IsAuthenticated()
 
 router.use('/product', isAuthenticated.execute, productRouter)
-router.use('/user', isAuthenticated.execute, userRouter)
+router.use('/user', userRouter)
 router.use('/auth', authRouter)
 
 router.get("/", (req: Request, res: Response) => {
