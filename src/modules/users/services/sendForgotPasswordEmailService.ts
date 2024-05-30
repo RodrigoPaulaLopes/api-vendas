@@ -10,7 +10,7 @@ interface IRequest {
 
 }
 
-class SendEmailForgotPassword {
+class SendForgotPasswordEmailService {
 
     private readonly userRepository
     private readonly userTokenRepository
@@ -36,4 +36,4 @@ class SendEmailForgotPassword {
     }
 }
 
-export default SendEmailForgotPassword
+export default SendForgotPasswordEmailService
