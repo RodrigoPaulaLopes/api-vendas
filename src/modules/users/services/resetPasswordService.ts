@@ -4,6 +4,7 @@ import AppError from "shared/errors/error"
 import {isAfter, addHours} from 'date-fns'
 import UserTokenRepository from "../typeorm/repositories/user_tokens.repository"
 import {hash} from 'bcrypt'
+import User from "../typeorm/entities/users"
 interface IRequest {
     token: string,
     password: string
@@ -30,16 +31,22 @@ class ResetPasswordService {
 
 
         // verify if user exists
-        const user = await this.userRepository.findById(userToken.id as string)
+        const user: User = await this.userRepository.findById(userToken.user_id as string) as User
+        console.log(user)
         if (!user) throw new AppError('The user provide from token does not exists!', 404)
 
-        // verify if token has been taken 2 hours
+        // verify if token has been taken 3 hours
+
+        const date = new Date(user.created_at as Date)
+
+        const addedTwoHoursDate = addHours(date, 2)
 
 
-        const addedTwoHoursDate = addHours(new Date(user.created_at as Date), 2)
-
-
-        if(isAfter(Date.now(), addedTwoHoursDate)) throw new AppError('Token expired!', 400)
+        const date_now = Date.now()
+        
+        const isAfterToken = isAfter(addedTwoHoursDate, date_now)
+        
+        if(isAfterToken) throw new AppError('Token expired!', 400)
 
 
         const hasPass: string = await hash(password, 10)
