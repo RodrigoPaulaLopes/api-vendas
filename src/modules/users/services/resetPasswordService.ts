@@ -32,7 +32,7 @@ class ResetPasswordService {
 
         // verify if user exists
         const user: User = await this.userRepository.findById(userToken.user_id as string) as User
-        console.log(user)
+     
         if (!user) throw new AppError('The user provide from token does not exists!', 404)
 
         // verify if token has been taken 3 hours
