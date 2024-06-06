@@ -2,6 +2,7 @@ import {Router, Request, Response} from 'express'
 
 import productRouter from "../routes/products.router"
 import userRouter from '../routes/users.router'
+import customerRouter from '../routes/customer.router'
 import authRouter from '../routes/auth.router'
 import IsAuthenticated from 'modules/users/middlewares/isAuthenticated.middleware'
 import forgotRouter from './password.router'
@@ -12,6 +13,7 @@ const isAuthenticated = new IsAuthenticated()
 
 router.use('/product', isAuthenticated.execute, productRouter)
 router.use('/user', userRouter)
+router.use('/customer', isAuthenticated.execute, customerRouter)
 router.use('/auth', authRouter)
 router.use('/password', forgotRouter)
 
