@@ -9,35 +9,43 @@ dotenv.config()
 const SECRET = process.env.SECRET as string
 
 class IsAuthenticated {
-
     async execute(req: Request, res: Response, next: NextFunction) {
-
-        const findUserById = new ShowUserService()
-
-        // take the authorization header
-        const [prefix, token] = req.headers.authorization?.split(" ") as string[]
-
-        // verify prefix
-        if (prefix !== 'Bearer') throw new AppError('Invalid prefix token', 401)
-
-        // verify token
         try {
+            const showUserService = new ShowUserService();
+            // take the authorization header
+            const [prefix, token] = req.headers.authorization?.split(" ") || [];
+            
+            if (!token) {
+                throw new AppError('Token not provided', 401);
+            }
 
-            const payload = jwt.verify(token, SECRET)
-            const id = payload.sub as string
+            // verify prefix
+            if (prefix !== 'Bearer') {
+                throw new AppError('Invalid prefix token', 401);
+            }
+
+            // verify token
+            const payload = jwt.verify(token, SECRET) as { sub: string };
+            console.log(`JWT Payload: ${JSON.stringify(payload)}`);
+            const id = payload.sub;
+            if (!id) {
+                throw new AppError('Token payload invalid', 401);
+            }
 
             // find user by id
-            const user = await findUserById.execute({ id })
+            const user = await showUserService.execute({ id });
+;
 
             req.user = {
-                id: user.id
-            }
-          
-            return next()
-        } catch {
-            throw new AppError('Invalid token!', 401)
+                id: user.id as string
+            };
+
+            return next();
+        } catch (error) {
+            console.error(`Authentication error: ${error.message}`);
+            return res.status(401).json({ status: 'error', message: error.message });
         }
     }
 }
 
-export default IsAuthenticated
+export default IsAuthenticated;
