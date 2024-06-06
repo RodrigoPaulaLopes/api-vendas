@@ -18,7 +18,8 @@ class ShowProfileService {
 
     public async execute({id}: IRequest) : Promise<User> {
         
-        const user = await this.repository.findById(id)
+        const user: User = await this.repository.findById(id) as User
+        
         // verify if user not exists
         if(!user) throw new AppError('User not exist!')
         
