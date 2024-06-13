@@ -52,7 +52,8 @@
     "pg": "^8.11.5",
     "reflect-metadata": "^0.2.2",
     "tsconfig-paths": "^4.2.0",
-    "typeorm": "0.2.29"
+    "typeorm": "0.2.29",
+    "typeorm-pagination": "2.0.1"
   },
   "repository": "git@github.com:RodrigoPaulaLopes/api-vendas.git",
   "author": "RodrigoPaulaLopes <rodrigo.plopesti@gmail.com>"
