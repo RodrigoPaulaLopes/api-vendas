@@ -15,7 +15,7 @@ router.post('/create', celebrate({
     }
 }), orderController.create)
 
-router.post('/show/:id', celebrate({
+router.get('/show/:id', celebrate({
     [Segments.PARAMS]: {
         id: Joi.string().uuid().required(),
     }
