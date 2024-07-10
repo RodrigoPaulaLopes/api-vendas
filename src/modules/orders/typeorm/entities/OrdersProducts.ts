@@ -6,7 +6,7 @@ import Order from "./Order"
 class OrdersProducts {
     @PrimaryGeneratedColumn('uuid')
     id?: string
-    
+
     @Column('decimal')
     price: number
 
@@ -14,11 +14,18 @@ class OrdersProducts {
     quantity: number
 
     @ManyToOne(() => Product, product => product.orders_products)
-    @JoinColumn({name: "product_id"})
+    @JoinColumn({ name: "product_id" })
     product: Product
 
+
+    @Column()
+    product_id: string
+
+    @Column()
+    order_id: string
+
     @ManyToOne(() => Order, order => order.orders_products)
-    @JoinColumn({name: "order_id"})
+    @JoinColumn({ name: "order_id" })
     order: Order
 
     @CreateDateColumn()
