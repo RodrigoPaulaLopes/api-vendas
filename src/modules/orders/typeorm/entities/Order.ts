@@ -6,12 +6,12 @@ import OrdersProducts from "./OrdersProducts"
 class Order {
     @PrimaryGeneratedColumn('uuid')
     id?: string
-    
+
     @ManyToOne(() => Customer)
-    @JoinColumn({name: "customer_id"})
+    @JoinColumn({ name: "customer_id" })
     customer: Customer
 
-    @OneToMany(() => OrdersProducts, orders_products => orders_products.order)
+    @OneToMany(() => OrdersProducts, orders_products => orders_products.order, { cascade: true })
     orders_products: OrdersProducts[]
 
 
