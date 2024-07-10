@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, TableColumn } from "typeorm";
+import { MigrationInterface, QueryRunner, TableColumn, TableForeignKey } from "typeorm";
 
 export class AddIdCustomerToOrders1718470028264 implements MigrationInterface {
 
@@ -19,6 +19,9 @@ export class AddIdCustomerToOrders1718470028264 implements MigrationInterface {
             referencedColumnNames: ['id'],
             referencedTableName: 'customers',
             onDelete: 'SET NULL',
+            clone: function (): TableForeignKey {
+                throw new Error("Function not implemented.");
+            }
         })
     }
 
