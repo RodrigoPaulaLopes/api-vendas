@@ -43,11 +43,14 @@ class CreateOrderService {
 
         const checkInexstentsProducts = products.filter(product => !existsProductsId.includes(product.id))
 
-        if (!checkInexstentsProducts.length) throw new AppError(`Could not find product with id ${checkInexstentsProducts[0].id}`, 404)
+        if (checkInexstentsProducts.length < 0) throw new AppError(`Could not find product with id ${checkInexstentsProducts[0].id}`, 404)
 
-        const quantityAvailable = products.filter(product => existsProducts.filter(p => p.id === product.id)[0].quantity < product.quantity)
-
-        if (!quantityAvailable.length) throw new AppError(`The quantity ${quantityAvailable[0].quantity} is not available for ${quantityAvailable[0].id}`, 400)
+        const quantityAvailable = products.filter(product => {
+            const foundProduct = existsProducts.filter(p => p.id === product.id)[0];
+            if (!foundProduct) throw new AppError(`Product with id ${product.id} not found in existsProducts`, 404);
+            return foundProduct.quantity < product.quantity;
+        });
+        if (quantityAvailable.length < 0) throw new AppError(`The quantity ${quantityAvailable[0].quantity} is not available for ${quantityAvailable[0].id}`, 400)
 
 
         const serializedProducts = products.map(product =>
@@ -61,14 +64,17 @@ class CreateOrderService {
         const order = await this.orderRepository.createOrder({ customer: customer, products: serializedProducts })
 
         const { orders_products } = order
-
-        const updateProductQuantity = orders_products.map(product => 
-            ({
-                 id: product.id, 
-                 quantity: existsProducts.filter(p => p.id === product.id)[0].quantity - product.quantity,
-
-                })
-            )
+  
+        const updateProductQuantity = orders_products.map(product => {
+            const foundProduct = existsProducts.filter(p =>  p.id === product.product_id)[0];
+            if (!foundProduct) throw new AppError(`Product with id ${product.id} not found`, 404);
+            return {
+                id: product.id,
+                name: foundProduct.name,
+                quantity: foundProduct.quantity - product.quantity,
+                price: foundProduct.price
+            };
+        });
         await this.productRepository.save(updateProductQuantity)
 
         return order
