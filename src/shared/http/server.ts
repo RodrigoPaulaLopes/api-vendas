@@ -6,8 +6,10 @@ import router from './routes/index.router'
 import {errors} from 'celebrate'
 import AppError from "../errors/error"
 import "../typeorm"
-import {pagination} from 'typeorm-pagination'
 import uploadConfig from '../../config/upload'
+
+
+import {pagination} from 'typeorm-pagination'
 
 const app = express()
 

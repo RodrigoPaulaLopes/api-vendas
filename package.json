@@ -40,6 +40,7 @@
     "@types/nodemailer": "^6.4.15",
     "bcrypt": "^5.1.1",
     "celebrate": "^15.0.3",
+    "class-transformer": "^0.5.1",
     "cors": "^2.8.5",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
@@ -53,7 +54,7 @@
     "reflect-metadata": "^0.2.2",
     "tsconfig-paths": "^4.2.0",
     "typeorm": "0.2.29",
-    "typeorm-pagination": "2.0.1"
+    "typeorm-pagination": "^2.0.3"
   },
   "repository": "git@github.com:RodrigoPaulaLopes/api-vendas.git",
   "author": "RodrigoPaulaLopes <rodrigo.plopesti@gmail.com>"
