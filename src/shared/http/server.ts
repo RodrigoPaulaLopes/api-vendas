@@ -7,9 +7,10 @@ import {errors} from 'celebrate'
 import AppError from "../errors/error"
 import "../typeorm"
 import uploadConfig from '../../config/upload'
-
-
+import dotenv from 'dotenv'
 import {pagination} from 'typeorm-pagination'
+
+dotenv.config()
 
 const app = express()
 

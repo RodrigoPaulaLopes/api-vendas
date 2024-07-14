@@ -1,4 +1,4 @@
-import {RedisOptions} from 'ioredis'
+import { RedisOptions } from 'ioredis';
 
 interface IRedisConf {
     config: {
@@ -11,9 +11,9 @@ export default {
     config: {
         redis: {
             host: process.env.REDIS_HOST,
-            port: process.env.REDIS_PORT,
+            port: Number(process.env.REDIS_PORT),
             password: process.env.REDIS_PASSWORD
         }
     },
     driver: 'redis'
-} as IRedisConf
+} as IRedisConf;
