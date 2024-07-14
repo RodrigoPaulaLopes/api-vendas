@@ -13,8 +13,9 @@ class ProfileController implements GenericController {
         const id = req.user.id
         
         const showProfileService = new ShowProfileService()
+        const user = await showProfileService.execute({id: id})
 
-        return res.status(200).json(await showProfileService.execute({id: id}))
+        return res.status(200).json(user)
 
     }
     async update(req: Request, res: Response): Promise<Response> {

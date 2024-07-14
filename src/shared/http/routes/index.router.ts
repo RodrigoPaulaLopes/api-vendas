@@ -7,6 +7,7 @@ import authRouter from '../routes/auth.router'
 import IsAuthenticated from 'modules/users/middlewares/isAuthenticated.middleware'
 import forgotRouter from './password.router'
 import profileRouter from './profile.router'
+import orderRouter from './order.router'
 
 const router = Router()
 const isAuthenticated = new IsAuthenticated()
@@ -16,6 +17,7 @@ router.use('/user', userRouter)
 router.use('/customer', isAuthenticated.execute, customerRouter)
 router.use('/auth', authRouter)
 router.use('/password', forgotRouter)
+router.use('/order', isAuthenticated.execute, orderRouter)
 
 router.use('/profile', isAuthenticated.execute, profileRouter)
 

@@ -1,6 +1,7 @@
 import { getCustomRepository } from "typeorm"
 import ProductRepository from "../typeorm/repositories/products.repository"
-
+import RedisCache from "shared/cache/RedisCache"
+import Product from "../typeorm/entities/product"
 interface IResponse {
     id: string
     name: string,
@@ -10,14 +11,24 @@ interface IResponse {
     updatedAt: Date
 }
 
-class ListProductsService{
+class ListProductsService {
     private readonly repository
+    private readonly cache
 
-    constructor(){
+    constructor() {
         this.repository = getCustomRepository(ProductRepository)
+        this.cache = new RedisCache()
     }
-    async execute(){
-        return await this.repository.find()
+    async execute() {
+
+        let products: Product[] | null = await this.cache.recover<Product[]>('products')
+
+        if (!products) {
+
+            products = await this.repository.find()
+            await this.cache.save("products", products)
+        }
+        return products
     }
 }
 

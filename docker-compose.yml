@@ -13,6 +13,24 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5436:5432"
+  cache:
+    container_name: cache
+    image: redis:6.2-alpine
+    restart: always
+    environment:
+      - REDIS_PASSWORD=1234
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass 1234
+    volumes: 
+      - cache:/data
+  redis-insight:
+    image: redis/redisinsight:latest
+    restart: always
+    ports:
+      - "5540:5540"
+    volumes:
+      - redis-insight:/data
   app:
     build: .
     container_name: seller-api
@@ -22,6 +40,10 @@ services:
       - .:/usr/src/app/
     depends_on:
       - seller-db
+      - cache
 
 volumes:
   db-data:
+  redis-insight:
+  cache:
+    driver: local
