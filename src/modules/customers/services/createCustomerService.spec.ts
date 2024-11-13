@@ -15,7 +15,6 @@ jest.mock('typeorm', () => {
     getCustomRepository: jest.fn(), 
   };
 });
-jest.mock('../typeorm/repositories/customer.repository');
 
 describe('CreateCustomerService', () => {
   let customerRepository: any;

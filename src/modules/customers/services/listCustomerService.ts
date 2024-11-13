@@ -1,6 +1,7 @@
 import { getCustomRepository, getRepository } from "typeorm"
 import CustomerRepository from "../typeorm/repositories/customer.repository"
 import Customer from "../typeorm/entities/Customers"
+import User from "modules/users/typeorm/entities/users";
 
 interface IPaginateCustomer {
     from: number;
@@ -21,7 +22,7 @@ class ListCustomerService {
         this.repository = getCustomRepository(CustomerRepository) 
     }
 
-    public async execute() : Promise<IPaginateCustomer> {
+    public async execute() : Promise<Customer[]> {
         return await this.repository.find()
     }
 }
