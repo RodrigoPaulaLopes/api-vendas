@@ -31,14 +31,14 @@ describe("List Customer service ", () => {
     }] 
 
     // mockar o repository e pegar partes das funções de repositorio do customer
-    let customerRepository: jest.Mocked<Partial<Repository<Customer>>>
+    let customerRepository: jest.Mocked<CustomerRepository>
     let listCustomerService: ListCustomerService 
 
     beforeEach(() => {
         // mockar as funções do repository
         customerRepository = {
             find: jest.fn()
-          };
+          } as unknown as jest.Mocked<CustomerRepository>;
         
           (getCustomRepository as jest.Mock).mockReturnValue(customerRepository)
           listCustomerService = new ListCustomerService()
